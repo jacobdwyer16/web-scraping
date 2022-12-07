@@ -21,5 +21,3 @@ def main():
     driver = driver_maker()
     element = driver.find_element(by="xpath", value=os.environ['xpath'])
     return element.text
-
-print(main())
