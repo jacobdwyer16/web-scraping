@@ -1,6 +1,8 @@
 from selenium import webdriver
 import os
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
+import time
 
 service = Service(os.environ['driver'])
 
@@ -19,7 +21,10 @@ def driver_maker():
 
 def main():
     driver = driver_maker()
-    element = driver.find_element(by="xpath", value=os.environ['xpath'])
-    return element.text
-    
+    driver.find_element(by="id", value=os.environ['id_username']).send_keys(os.environ['username'])
+    driver.find_element(by="id", value = os.environ['id_password']).send_keys(os.environ['password'] + Keys.RETURN)
+    time.sleep(1)
+    driver.find_element(by="xpath", value = os.environ['xpath']).click()
+    return driver.current_url
+
 print(main())
