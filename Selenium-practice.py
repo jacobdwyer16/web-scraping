@@ -2,6 +2,7 @@ from selenium import webdriver
 import os
 from selenium.webdriver.chrome.service import Service
 import time
+import datetime as dt
 
 service = Service(os.environ['driver'])
 
@@ -24,10 +25,15 @@ def cleaner(string):
         return string[:-1]
     return string[0]
 
+def writer(string):
+    filename = f"{dt.datetime.now().strftime('%Y-%m-%d.%H-%M-%S')}.txt"
+    with open(filename, 'w') as file:
+        file.write(string)
+
 def main():
     driver = driver_maker()
     time.sleep(2)
     element = driver.find_element(by="xpath", value=os.environ['xpath'])
-    return cleaner(element.text)
+    writer(cleaner(element.text))
     
 print(main())
