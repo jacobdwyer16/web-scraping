@@ -1,6 +1,7 @@
 from selenium import webdriver
 import os
 from selenium.webdriver.chrome.service import Service
+import time
 
 service = Service(os.environ['driver'])
 
@@ -17,9 +18,16 @@ def driver_maker():
     driver.get("https://www.covenantpca.org/")
     return driver
 
+def cleaner(string):
+    string = string.split(":")
+    if len(string)>1:
+        return string[:-1]
+    return string[0]
+
 def main():
     driver = driver_maker()
+    time.sleep(2)
     element = driver.find_element(by="xpath", value=os.environ['xpath'])
-    return element.text
+    return cleaner(element.text)
     
 print(main())
